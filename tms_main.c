@@ -353,44 +353,69 @@ void book_ticket(){
 
 	system("cls");
 	FILE *fp;
+    FILE *fps;
 	int p;
-	
+	int i, j, ticket_price;
+    //open passengers file
 	fp = fopen("passengers.txt","ab+"); 
 	if(fp==NULL)
 	{
 	printf("file not found");	
-	}		
+	}	
+    //open trains file
+    fps = fopen("trains.txt","ab+"); 
+	if(fps==NULL) {
+	printf("file not found");	
+	}	
+
 	printf("Enter Passengers Amount - ");
 	scanf("%d",&p);
-	int q=1;
-	p=p-1;
-	int i, j;
-	for ( i=0;i<=p;i++) {
-		for ( j=0;j<=0;j++) {
-				printf("    \n\n%d Passenger Details   \n\n",q);
-				printf("First name:- ");
-				scanf("%s",&tu[i][j].f_name);
 
-				printf("Last name:- ");
-				scanf("%s",&tu[i][j].l_name);
-				
-				printf("Age:- ");
-				scanf("%s",&tu[i][j].age);
+    //check available seats
+    for ( i=0;i<10;i++) {
+		for ( j=0;j<=0;j++) {                                         
+				fread(&trr[i][j],sizeof(struct train),1,fps);
+                 if (p <= trr[i][j].seats) {
+                    //check total ticket price
+                    int price=atoi(trr[i][j].charge);
+                    ticket_price = p*price;
+                    int q=1;
+	                p=p-1;
+                    printf("Total ticket price is %d\n\n",ticket_price);
+	                for ( i=0;i<=p;i++) {
+		                 for ( j=0;j<=0;j++) {
+				            printf("    \n\n%d Passenger Details   \n\n",q);
+				            printf("First name:- ");
+				            scanf("%s",&tu[i][j].f_name);
 
-				printf("From:- ");
-				scanf("%s",&tu[i][j].from);
+				            printf("Last name:- ");
+				            scanf("%s",&tu[i][j].l_name);
+				     
+				            printf("Age:- ");
+				            scanf("%s",&tu[i][j].age);
+
+			            	printf("From:- ");
+			             	scanf("%s",&tu[i][j].from);
 	
-				printf("To:- ");
-				scanf("%s",&tu[i][j].to);
+				            printf("To:- ");
+			            	scanf("%s",&tu[i][j].to);
 				
-				printf("Mobile no:- ");
-				scanf("%s",&tu[i][j].m_no);
-				printf("\n\n");
-				q=q+1;
-			fwrite(&tu[i][j],sizeof(struct train_user),1,fp);	
-		}
-	}
+				            printf("Mobile no:- ");
+				            scanf("%s",&tu[i][j].m_no);
+				            printf("\n\n");
+				            q=q+1;
+			            fwrite(&tu[i][j],sizeof(struct train_user),1,fp);	
+		                }
+	                }
+                 }else{
+                     printf("Sorry, %d seats are not available\n\n",p);
+                 }
+                 
+        }
+    }
+ 
 	fclose(fp);
+    fclose(fps);
 	system("cls");
 	user_menu();
 	
@@ -545,13 +570,13 @@ void view_train_for_user(){
 	printf("file not found");	
 	}
 	printf("                _______________Train Details_________________\n\n\n\n");
-	printf("Train_name   \t\t Train_no \t\t From \t\t To \t\t Charge\n");
+	printf("Train_name   \t\t Train_no \t\t From \t\t To \t\t Charge \t\t Seats\n");
     int i, j;
 	for ( i=0;i<10;i++) {
 		for ( j=0;j<=0;j++) {                                         
 				fread(&trr[i][j],sizeof(struct train),1,fp);
 				 
-				printf("%1s %20s %20s %20s %20s\n",trr[i][j].train_name,trr[i][j].train_no,trr[i][j].from,trr[i][j].to,trr[i][j].charge);			
+				printf("%1s %20s %20s %20s %20s\n",trr[i][j].train_name,trr[i][j].train_no,trr[i][j].from,trr[i][j].to,trr[i][j].charge,trr[i][j].seats);			
 		}
 	}
 	char a;
@@ -657,13 +682,13 @@ void t_update(){
 		if(fp1==NULL)  {    
 			printf("file not found");	
 		}
-		printf("Train_name   \t\t Train_no \t\t From \t\t To \t\t Charge \t\t Status\n");
+		printf("Train_name   \t\t Train_no \t\t From \t\t To \t\t Charge \t\t Status \t\t Seats\n");
 		int i,j;
 		for ( i=0;i<=10;i++){
 			for ( j=0;j<=0;j++){
 			fread(&ttt[i][j],sizeof(struct train),1,fp1);
 			
-				printf("%1s %20s %20s %20s %20s %20s \n",ttt[i][j].train_name,ttt[i][j].train_no,ttt[i][j].from,ttt[i][j].to,ttt[i][j].charge,ttt[i][j].status);
+				printf("%1s %20s %20s %20s %20s %20s \n",ttt[i][j].train_name,ttt[i][j].train_no,ttt[i][j].from,ttt[i][j].to,ttt[i][j].charge,ttt[i][j].status,ttt[i][j].seats);
 			}
 		}
  fclose(fp1);
