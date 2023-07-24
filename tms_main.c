@@ -1,6 +1,6 @@
 // Created by Shehal.H on 2023-07-23 T21:00:00
-// Admin Login: admin
-// Admin Password: password
+// Admin Login: KUDSE23.1F
+// Admin Password: 080-086-095
 
 #include <stdio.h>
 #include <string.h>
@@ -28,7 +28,8 @@ struct train {
 	char charge[20];
 	char from[20];
 	char to[20];
-	char status[20];	
+	char status[20];
+    char seats[20];	
 }trr[200][200],ttt[200][200];
 
 
@@ -72,6 +73,7 @@ void main() {
 
 //main menu
 void menu() {	
+    system("cls");
     char choice;
 
 	printf("\n1.Signup\n2.Login \n3.Administrator\n4.Exit\n");
@@ -157,7 +159,7 @@ void des_page() {
 				menu();
 				break;
 			default :
-				printf("ERORR::: Enter valid choice\n");
+				printf("ERROR::: Enter valid choice\n");
 				des_page();
 				break;
 		}
@@ -215,7 +217,7 @@ void wrong_pas() {
 				menu();
 				break;
 			default :
-				printf("ERORR::: Enter valid choice\n");
+				printf("ERROR::: Enter valid choice\n");
 				wrong_pas();
 				break;
 		}	
@@ -223,10 +225,11 @@ void wrong_pas() {
 
 //administrator login page
 void administrator() {
+    system("cls");
 	char u_name[20];
 	char pass[20];
 	char value;
-	printf("\n\n\n               _______________________Welcome to Administrator Pannel_______________________\n\n\n");
+	printf("\n\n\n               _______________________Welcome to Administrator Login_______________________\n\n\n");
 	printf("Enter admin Username:- ");
 	scanf("%s",&u_name);
 	printf("Enter admin password:- ");
@@ -236,7 +239,7 @@ void administrator() {
 		administrator_menu();
 	} else {
 	    system("cls");
-	    printf("ERORR::: Please enter valid username or password \n\n");
+	    printf("ERROR::: Please enter valid username or password \n\n");
 	    ad_wrong_pass();
 	}	
 }
@@ -257,7 +260,7 @@ void ad_wrong_pass() {
 				menu();
 				break;
 			default :
-				printf("ERORR::: Enter valid choice\n");
+				printf("ERROR::: Enter valid choice\n");
 				ad_wrong_pass();
 				break;
 		}
@@ -267,8 +270,9 @@ void ad_wrong_pass() {
 
 //User menu
 void user_menu() {
+    system("cls");
 		char choice;
-		printf("1.Book Ticket \n 2.Verify Bookings \n 3.View Train   \n 4.Quit  \n 5.Back \n");
+		printf("1.Book Ticket \n2.Verify Bookings \n3.View Train   \n4.Quit  \n5.Back \n");
         printf("\n");
 		printf("Enter your choice - ");
 		scanf("%s",&choice);
@@ -287,11 +291,11 @@ void user_menu() {
 				quit();
 				break;
 			case '5':
-				menu();
+				main();
 				break;
 			default:
 				system("cls");
-				printf("\nplease enter valid value\n\n");
+				printf("\nERROR::: Please enter valid choice\n\n");
 				user_menu();
 				break;
 		}	
@@ -299,45 +303,37 @@ void user_menu() {
 
 //administrator menu
 void administrator_menu(){
-	system("cls");
- 
-		char no;
-		printf("\n\n           _______________________________welcome priyanshu sir_______________________________\n\n\n ");
-		printf(" 1.add train \n 2.view all trains \n 3.passenger info \n 4.updates in train  \n 5.back   \n 6.quit \n");
-		printf("enter your choice");
-		scanf("%s",&no);
+	    system("cls");
+		char choice;
+		printf("\n\n           _______________________________Welcome to TMS Admin Panel_______________________________\n\n\n");
+		printf("1.Add train \n2.View all trains \n3.Passenger info \n4.Updates in train  \n5.Back   \n6.Quit \n");
+        printf("\n");
+		printf("Enter your choice- ");
+		scanf("%s",&choice);
 		
-		switch (no){
+		switch (choice) {
 			case '1' :
 			    add_train();
 				break;
-			
 			case '2' :
 			    view_train_for_administrator();
 				break;
-			
 			case '3' :
 				passenger_info();      
 				break;
-			
 			case '4':
-			
 				updates_in_train();
-				break;
-					
-			
+				break;	
 			case '5':
 				system("cls");
-				menu();
-				break;
-					
+				main();
+				break;	
 			case '6' :
 				quit();
 				break;
-				
 			default:
 				system("cls");
-				printf("please enter valid keyword\n\n");
+				printf("ERROR::: Please enter valid Choice\n\n");
 				system("pause");
 				administrator_menu();
 				break;
@@ -352,7 +348,7 @@ int quit(){
 	return 0;
 }
 
-//Train Booking
+//Train Booking - user
 void book_ticket(){
 
 	system("cls");
@@ -401,7 +397,7 @@ void book_ticket(){
 }
 
 
-//verify booking
+//verify booking - user
 void verify(){
 	system("cls");
 	FILE *fp;
@@ -420,14 +416,15 @@ void verify(){
 		for ( j=0;j<=0;j++){
 			fread(&tu[i][j],sizeof(struct train_user),1,fp);
 				if ((strcmp(mob,tu[i][j].m_no)==0)){
-				    printf("%dst user\n\n",p);
+                    printf("\n");
+				    printf("%d Passenger\n\n",p);
 				    printf("First name:- %s\n",tu[i][j].f_name);
 				    printf("Last name:- %s\n",tu[i][j].l_name);
 				    printf("Age:- %s\n",tu[i][j].age);
 				    printf("From:- %s\n",tu[i][j].from);
 				    printf("To:- %s\n",tu[i][j].to);
 			    	p=p+1;
-				    printf("\n\n\n");
+				    printf("\n\n");
 				}else{
 					count=count+1;
 				}
@@ -459,67 +456,62 @@ void wrong_mob(){
 				user_menu();
 				break;
 			default :
-				printf("ERORR::: Enter valid value\n");
+				printf("ERROR::: Enter valid value\n");
 				wrong_mob();
 				break;
 		}	
 }
 
-
-
-
-
-
+//add train details -administrator
 void add_train(){
 	system("cls");
 	FILE *fp;
-	//struct train trr[200][200] ;
 	int a;
 	fp = fopen("trains.txt","ab");
-	
-	if(fp==NULL)
-	{
+	if(fp==NULL) {
 	printf("file not found");
 	}
-	printf("how many trains you wants to add");
+	printf("Trains amount you wants to add - ");
 	scanf("%d",&a);
 	a=a-1;
 	int train_special_no=0;
     int i, j;
-	for ( i=0;i<=a;i++){
-		for ( j=0;j<=0;j++){
+	for ( i=0;i<=a;i++) {
+		for ( j=0;j<=0;j++) {
 			
 			printf("\n\n");
-			printf("enter train no:- ");
+			printf("Enter train no:- ");
 			scanf("%s",&trr[i][j].train_no );
 
-			printf("enter train name:- ");
+			printf("Enter train name:- ");
 			scanf("%s",&trr[i][j].train_name );
 
-			printf("from:- ");
+			printf("From:- ");
 			scanf("%s",&trr[i][j].from );
 			
-			printf("to:- ");
+			printf("To:- ");
 			scanf("%s",&trr[i][j].to);
 
-			printf("charge:- ");
+			printf("Charge:- ");
 			scanf("%s",&trr[i][j].charge);
 			
-			printf("status:- ");
+			printf("Status:- ");
 			scanf("%s",&trr[i][j].status);
+
+            printf("Available seats amount:- ");
+            scanf("%s",&trr[i][j].seats);
+
 			train_special_no=train_special_no+1;
-			fwrite(&trr[i][j],sizeof(struct train),1,fp);
-			
+			fwrite(&trr[i][j],sizeof(struct train),1,fp);	
 		}
 	}
 fclose(fp);
-
 system("pause");
 administrator_menu();
 
 }
 
-
+//passenger info - administrator
 void passenger_info(){
 	system("cls");
 	FILE *fp;
@@ -529,12 +521,12 @@ void passenger_info(){
 	{
 	printf("file not found");	
 	}
-	printf("first name\t\tlast name\t\tage\t\tfrom\t\t to\t\t mobile no\n");
+	printf("First name\t\tLast name\t\tAge\t\tFrom\t\t To\t\t Mobile no\n");
     int i, j;
 	for ( i=0;i<=10;i++){
 		for ( j=0;j<=0;j++){
 				fread(&tu[i][j],sizeof(struct train_user),1,fp);
-				printf("%s %20s %20s %20s %20s %20s\n",tu[i][j].f_name ,tu[i][j].l_name ,tu[i][j].age , tu[i][j].from , tu[i][j].to, tu[i][j].m_no);		
+				printf("%s\t\t%20s\t\t%20s\t\t%20s\t\t%20s\t\t%20s\n",tu[i][j].f_name ,tu[i][j].l_name ,tu[i][j].age , tu[i][j].from , tu[i][j].to, tu[i][j].m_no);		
 		}
 	}
 	fclose(fp);
@@ -543,34 +535,28 @@ void passenger_info(){
 }
 
 
-
+//view train - user
 void view_train_for_user(){
 	system("cls");
 	FILE *fp;
 	int p;
 	fp = fopen("trains.txt","ab+"); 
-	if(fp==NULL)
-	{
+	if(fp==NULL) {
 	printf("file not found");	
 	}
-	printf("                             _______________trains_________________\n\n\n\n");
-	printf("train_name   \t\t train_no \t\t from \t\t to \t\t charge\n");
+	printf("                _______________Train Details_________________\n\n\n\n");
+	printf("Train_name   \t\t Train_no \t\t From \t\t To \t\t Charge\n");
     int i, j;
-	for ( i=0;i<10;i++){
-		for ( j=0;j<=0;j++){                                         
+	for ( i=0;i<10;i++) {
+		for ( j=0;j<=0;j++) {                                         
 				fread(&trr[i][j],sizeof(struct train),1,fp);
 				 
-				printf("%1s %20s %20s %20s %20s\n",trr[i][j].train_name,trr[i][j].train_no,trr[i][j].from,trr[i][j].to,trr[i][j].charge);
-				//printf("train_no:-%s\n",trr[i][j].train_no);
-				//printf("from:-%s\n",trr[i][j].from);                                                                                      
-				//printf("to:-%s\n",trr[i][j].to);
-				//printf("charge:-%s\n",trr[i][j].charge);
-			
+				printf("%1s %20s %20s %20s %20s\n",trr[i][j].train_name,trr[i][j].train_no,trr[i][j].from,trr[i][j].to,trr[i][j].charge);			
 		}
 	}
 	char a;
 	fclose(fp);
-	printf("                                 _______________updates_________________\n\n\n\n");
+	printf("                _______________Train Updates_________________\n\n\n\n");
 	t_update();
 	system("pause");
 	system ("cls");
@@ -664,22 +650,20 @@ void updates_in_train(){
 		}	
 }
 
-
+//train updates
 void t_update(){
 	FILE *fp1;
 	fp1 = fopen("update_trains.txt","ab+"); 
-		if(fp1==NULL)             
-		{    
+		if(fp1==NULL)  {    
 			printf("file not found");	
 		}
-		printf("train_name   \t\t train_no \t\t from \t\t to \t\t charge \t\t status\n");
+		printf("Train_name   \t\t Train_no \t\t From \t\t To \t\t Charge \t\t Status\n");
 		int i,j;
 		for ( i=0;i<=10;i++){
 			for ( j=0;j<=0;j++){
 			fread(&ttt[i][j],sizeof(struct train),1,fp1);
 			
 				printf("%1s %20s %20s %20s %20s %20s \n",ttt[i][j].train_name,ttt[i][j].train_no,ttt[i][j].from,ttt[i][j].to,ttt[i][j].charge,ttt[i][j].status);
-			
 			}
 		}
  fclose(fp1);
