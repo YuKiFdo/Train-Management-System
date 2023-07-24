@@ -40,14 +40,14 @@ void login();
 void signup();
 void administrator();
 
-void administrator_info();
-void login_info();
+void administrator_menu();
+void user_menu();
 
-void c_account();
-void a_account();
-void l_account();
-void b_account();
-void varify();
+void des_page();
+void ad_wrong_pass();
+void wrong_pas();
+void wrong_mob();
+void verify();
 
 void add_train();
 void update_train();
@@ -74,7 +74,7 @@ void main() {
 void menu() {	
     char choice;
 
-	printf("\n1.Creat Account\n2.User Login \n3.Administrator Login\n4.Exit\n");
+	printf("\n1.Signup\n2.Login \n3.Administrator\n4.Exit\n");
     printf("\n");
 	printf("Enter your choice:- ");
 	scanf("%s",&choice);
@@ -109,55 +109,45 @@ void change(){
 	system("COLOR 2");
 }
 
-
-void welcometext(){
+//welcome text
+void welcometext() {
 	change();
 	printf("\n\n              _______________________Welcome to Train Management System_______________________\n\n");
-
 }
 
-void signup(){
+//Create Account
+void signup() {
 	system("cls");
 	FILE *fp;
 	char value;
-	fp=fopen("signup.txt","ab+");
-	if(fp==NULL)
-	{
+	fp=fopen("users.txt","ab+");
+	if(fp==NULL) {
 	printf("file not found");	
 	}
-	printf("\n\n\n               _______________________create account_______________________\n\n\n");
+	printf("\n\n\n               _______________________Create New User Account_______________________\n\n\n");
 	int i, j ;
-	for ( i=0;i<=0;i++)
-	{
-		for( j=0;j<=0;j++)
-		{	
-			//printf("first name\n");
-			//scanf("%s",&arr[i][j].fname);
-			//printf("last name\n");
-			//scanf("%s",&arr[i][j].lname);
-			//printf("age\n");
-			//scanf("%s",&arr[i][j].age);
-			printf("Username\n");
+	for ( i=0;i<=0;i++) {
+		for( j=0;j<=0;j++) {	
+			printf("Enter your username - ");
 			scanf("%s",&arr[i][j].username);
-			printf("password\n");
+			printf("Enter your password - ");
 			scanf("%s",&arr[i][j].pass);
 			fwrite(&arr[i][j],sizeof(struct user),1,fp);
-			printf("           %s your account create successfully...\n\n\n",arr[i][j].username);
+            printf("\n\n");
+			printf("%s your account create successfully...\n\n\n",arr[i][j].username);
 		}
 	}
 	fclose(fp);
-	c_account();
-
-	
+	des_page();
 }
 
-
-void c_account(){
-		char value;
-		printf("do you want to go login page y/n :- \n");
-		scanf("%s",&value);
-		value=tolower(value);
-		switch(value){
+//Choose Destination page
+void des_page() {
+		char choice;
+		printf("Do you want to go login page y/n :- ");
+		scanf("%s",&choice);
+		choice=tolower(choice);
+		switch(choice) {
 			case 'y':
 				system("cls");
 				login();
@@ -167,69 +157,56 @@ void c_account(){
 				menu();
 				break;
 			default :
-				printf("enter valid value\n");
-				c_account();
+				printf("ERORR::: Enter valid choice\n");
+				des_page();
 				break;
 		}
-	
 }
 
-
-void login(){
+//Login page
+void login() {
 	system("cls");
 	FILE *fp;
 	struct user arr[100][100] ;
 	char pass[20],username[20];
-	int noo=0;
-	int no=49;
-	fp=fopen("signup.txt","ab+");
-	if(fp==NULL)
-	{
+	int no=0;
+	int count=49;
+	fp=fopen("users.txt","ab+");
+	if(fp==NULL) {
 		printf("file not found");
 	}
-	printf("\n\n\n               _______________________welcome to login page_______________________\n\n\n");
-	printf("Enter username\n");
-	//fflush(stdin);
+	printf("\n\n\n               _______________________Welcome to User Login Page_______________________\n\n\n");
+	printf("Enter Username - ");
 	scanf("%s",&username);
-	printf("Enter password\n");
-	//fflush(stdin);
+	printf("Enter Password - ");
 	scanf("%s",&pass);
     int i, j ;
-	for ( i=0;i<=no;i++)
-	
-	{
-		for( j=0;j<=0;j++)
-		{
+	for ( i=0;i<=count;i++) {
+		for( j=0;j<=0;j++) {
 			fread(&arr[i][j],sizeof(struct user),1,fp);
-			//printf("%s",arr[i][j].username);
-			if(strcmp(username,arr[i][j].username)==0 && strcmp(pass,arr[i][j].pass)==0 ){
-				//printf("__________sucessfully login__________");
+			if(strcmp(username,arr[i][j].username)==0 && strcmp(pass,arr[i][j].pass)==0 ) {
 				system ("cls");
-				printf("               ___________________welcome %s  ___________________\n\n\n ",arr[i][j].username);
-				login_info();
+				printf("               ___________________ Welcome %s ___________________\n\n\n ",arr[i][j].username);
+				user_menu();
+			}else{
+				no=no+1;
 			}
-			
-			else{
-				noo=noo+1;
-			}
-		}
-			
+		}		
 	}
-	if(noo==50){
-		printf("%s your username or password is encorrent\n\n",username);
-		l_account();
+	if(no==50) {
+		printf("%s your Username or Password is incorrect. Please try again..\n\n",username);
+		wrong_pas();
 	}
 fclose(fp);
-
 }
 
-
-void l_account(){
-		char value;
-		printf("do you want to go login again y/n :- \n");
-		scanf("%s",&value);
-		value=tolower(value);
-		switch(value){
+//wrong password - user
+void wrong_pas() {
+		char choice;
+		printf("Do you want to go login again y/n :- ");
+		scanf("%s",&choice);
+		choice=tolower(choice);
+		switch(choice){
 			case 'y':
 				login();
 				break;
@@ -238,45 +215,39 @@ void l_account(){
 				menu();
 				break;
 			default :
-				printf("enter valid value\n");
-				l_account();
+				printf("ERORR::: Enter valid choice\n");
+				wrong_pas();
 				break;
-		}
-	
+		}	
 }
 
-
-void administrator(){
+//administrator login page
+void administrator() {
 	char u_name[20];
 	char pass[20];
 	char value;
-	printf("\n\n\n               _______________________welcome to administrator pannel_______________________\n\n\n");
-	printf("user name:-");
+	printf("\n\n\n               _______________________Welcome to Administrator Pannel_______________________\n\n\n");
+	printf("Enter admin Username:- ");
 	scanf("%s",&u_name);
-	printf("password:-");
+	printf("Enter admin password:- ");
 	scanf("%s",&pass);
 
-	if ((strcmp(pass,"2002")==0 )&& (strcmp(u_name,"priyanshu")==0))
-	{
-		administrator_info();
-	}
-	
-	else
-	{
-	system("cls");
-	printf("please enter valid username or password \n\n");
-	a_account();
-	
-	}
-	
+	if ((strcmp(pass,"080-086-095")==0 )&& (strcmp(u_name,"KUDSE23.1F")==0)) {
+		administrator_menu();
+	} else {
+	    system("cls");
+	    printf("ERORR::: Please enter valid username or password \n\n");
+	    ad_wrong_pass();
+	}	
 }
 
-void a_account(){
-		char value;
-		printf("do you want to go administrator pannel again y/n :- \n");
-		scanf("%s",&value);
-		value=tolower(value);
-		switch(value){
+//wrong password - administrator
+void ad_wrong_pass() {
+		char choice;
+		printf("Do you want to go administrator pannel again y/n :- ");
+		scanf("%s",&choice);
+		choice=tolower(choice);
+		switch(choice) {
 			case 'y':
 				system("cls");
 				administrator();
@@ -286,66 +257,53 @@ void a_account(){
 				menu();
 				break;
 			default :
-				printf("enter valid value\n");
-				a_account();
+				printf("ERORR::: Enter valid choice\n");
+				ad_wrong_pass();
 				break;
 		}
-	
 }
 
 
 
-
-void login_info(){
-		
-		char no;
-		printf("1. book Ticket \n 2. varify \n 3. view Train   \n 4. quit  \n 5. back \n");
-		printf("enter your choice");
-		scanf("%s",&no);
+//User menu
+void user_menu() {
+		char choice;
+		printf("1.Book Ticket \n 2.Verify Bookings \n 3.View Train   \n 4.Quit  \n 5.Back \n");
+        printf("\n");
+		printf("Enter your choice - ");
+		scanf("%s",&choice);
 	
-		switch (no){
+		switch (choice) {
 			case '1' :
-			
 				book_ticket();			    
 				break;
-			
-			
 			case '2' :
-		
-				varify();
-				   
+				verify();   
 				break;
-			
 			case '3' :
 				view_train_for_user();
 				break;
-			
-			
 			case '4' :
-				
 				quit();
 				break;
-			
 			case '5':
 				menu();
 				break;
-
-			
-			
 			default:
 				system("cls");
 				printf("\nplease enter valid value\n\n");
-				login_info();
+				user_menu();
 				break;
 		}	
 }
 
-void administrator_info(){
+//administrator menu
+void administrator_menu(){
 	system("cls");
  
 		char no;
 		printf("\n\n           _______________________________welcome priyanshu sir_______________________________\n\n\n ");
-		printf("1.add train \n 2.view all trains \n 3.passenger info \n 4.updates in train  \n 5.back   \n 6.quit \n");
+		printf(" 1.add train \n 2.view all trains \n 3.passenger info \n 4.updates in train  \n 5.back   \n 6.quit \n");
 		printf("enter your choice");
 		scanf("%s",&no);
 		
@@ -381,7 +339,7 @@ void administrator_info(){
 				system("cls");
 				printf("please enter valid keyword\n\n");
 				system("pause");
-				administrator_info();
+				administrator_menu();
 				break;
 		}	
 }
@@ -394,7 +352,7 @@ int quit(){
 	return 0;
 }
 
-
+//Train Booking
 void book_ticket(){
 
 	system("cls");
@@ -406,112 +364,105 @@ void book_ticket(){
 	{
 	printf("file not found");	
 	}		
-	printf("how many passengers");
+	printf("Enter Passengers Amount - ");
 	scanf("%d",&p);
 	int q=1;
 	p=p-1;
 	int i, j;
-	for ( i=0;i<=p;i++){
-		for ( j=0;j<=0;j++){
-				printf("    \n\n%d  user   \n\n",q);
-				printf("first name:-");
+	for ( i=0;i<=p;i++) {
+		for ( j=0;j<=0;j++) {
+				printf("    \n\n%d Passenger Details   \n\n",q);
+				printf("First name:- ");
 				scanf("%s",&tu[i][j].f_name);
 
-				printf("last name:-");
+				printf("Last name:- ");
 				scanf("%s",&tu[i][j].l_name);
 				
-				printf("age:-");
+				printf("Age:- ");
 				scanf("%s",&tu[i][j].age);
 
-				printf("from:-");
+				printf("From:- ");
 				scanf("%s",&tu[i][j].from);
 	
-				printf("to:-");
+				printf("To:- ");
 				scanf("%s",&tu[i][j].to);
 				
-				printf("mobile no:- ");
+				printf("Mobile no:- ");
 				scanf("%s",&tu[i][j].m_no);
 				printf("\n\n");
 				q=q+1;
-				//s_no();
-			fwrite(&tu[i][j],sizeof(struct train_user),1,fp);
-			
+			fwrite(&tu[i][j],sizeof(struct train_user),1,fp);	
 		}
 	}
 	fclose(fp);
 	system("cls");
-	login_info();
+	user_menu();
 	
 }
 
 
-
-void varify(){
+//verify booking
+void verify(){
 	system("cls");
 	FILE *fp;
 	int p=1;
-	int noo=0;
+	int count=0;
 	int no=9;
-	char value[20];
+	char mob[20];
 	fp = fopen("passengers.txt","ab+"); 
-	if(fp==NULL)
-	{
+	if(fp==NULL) {
 	printf("file not found");	
 	}
-	printf("enter mobile no :-");
-	scanf("%s",&value);
+	printf("Enter mobile no :- ");
+	scanf("%s",&mob);
     int i, j;
 	for ( i=0;i<=no;i++){
 		for ( j=0;j<=0;j++){
 			fread(&tu[i][j],sizeof(struct train_user),1,fp);
-				if ((strcmp(value,tu[i][j].m_no)==0)){
-				printf("%dst user\n\n",p);
-				printf("first name:- %s\n",tu[i][j].f_name);
-				printf("last name:- %s\n",tu[i][j].l_name);
-				printf("age:- %s\n",tu[i][j].age);
-				printf("from:- %s\n",tu[i][j].from);
-				printf("to:- %s\n",tu[i][j].to);
-				p=p+1;
-				printf("\n\n\n");
+				if ((strcmp(mob,tu[i][j].m_no)==0)){
+				    printf("%dst user\n\n",p);
+				    printf("First name:- %s\n",tu[i][j].f_name);
+				    printf("Last name:- %s\n",tu[i][j].l_name);
+				    printf("Age:- %s\n",tu[i][j].age);
+				    printf("From:- %s\n",tu[i][j].from);
+				    printf("To:- %s\n",tu[i][j].to);
+			    	p=p+1;
+				    printf("\n\n\n");
+				}else{
+					count=count+1;
 				}
-				else{
-						noo=noo+1;
-					}
-				}
-					
-			}
-	if(noo==10){
-		printf("may be your mobile no was incorrect \n\n");
-		b_account();
+			}		
+		}
+	if(count==10) {
+		printf("Your Mobile Number was Incorrect\n\n");
+		wrong_mob();
 	}
 fclose(fp);
 system("pause");
 system("cls");
-login_info();
+user_menu();
 }
 
-
-void b_account(){
-		char value;
-		printf("do you want to go try again y/n :- \n");
-		scanf("%s",&value);
-		value=tolower(value);
-		switch(value){
+//Wrong mobile number
+void wrong_mob(){
+		char choice;
+		printf("Do you want to go try again y/n :- ");
+		scanf("%s",&choice);
+		choice=tolower(choice);
+		switch(choice) {
 			case 'y':
 				system("cls");
-				varify();
+				verify();
 				break;
 			case 'n':
 				system("cls");
-				login_info();
+				user_menu();
 				break;
 			default :
-				printf("enter valid value\n");
-				b_account();
+				printf("ERORR::: Enter valid value\n");
+				wrong_mob();
 				break;
-		}
-	
-	
+		}	
 }
 
 
@@ -564,7 +515,7 @@ void add_train(){
 fclose(fp);
 
 system("pause");
-administrator_info();
+administrator_menu();
 
 }
 
@@ -588,7 +539,7 @@ void passenger_info(){
 	}
 	fclose(fp);
 	system("pause");
-	administrator_info();
+	administrator_menu();
 }
 
 
@@ -623,7 +574,7 @@ void view_train_for_user(){
 	t_update();
 	system("pause");
 	system ("cls");
-	login_info();
+	user_menu();
 }
 
 
@@ -659,7 +610,7 @@ void view_train_for_administrator(){
 	check();
 	system("pause");
 	system ("cls");
-	administrator_info();
+	administrator_menu();
 }
 
 
@@ -675,7 +626,7 @@ void check(){
 	}
 	system("pause");
 	system ("cls");
-	administrator_info();
+	administrator_menu();
 	fclose(fp1);
 }
 
@@ -703,7 +654,7 @@ void updates_in_train(){
 				cancle_trains();
 			
 			case '4' :
-				administrator_info();
+				administrator_menu();
 				break;
 			
 			default:
@@ -760,7 +711,7 @@ void update_train(){
 								fclose(fp1);
 								fclose(fp); 
 							system("pause");
-							administrator_info(); 	
+							administrator_menu(); 	
 			}
 		}
 	}
@@ -773,14 +724,14 @@ void cancle_updates()
 	if( remove("update_trains.txt")== 0){
         printf("successfully deleted\n");
         system("pause");
-        administrator_info();
+        administrator_menu();
     }
 
     else{
     	
     	printf("\n\nerror\n\n");
     	system("pause");
-    	administrator_info();
+    	administrator_menu();
 	}
 
 }
@@ -799,7 +750,7 @@ void cancle_trains()
 
     printf("sucessfully cancaled\n");
     system("pause");
-	administrator_info();
+	administrator_menu();
 	fclose(fp);
 	fclose(fp1);
 }
