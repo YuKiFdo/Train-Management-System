@@ -1,7 +1,15 @@
+//  ______         _        __  ___                                       __    ____        __          
+// /_  __/______ _(_)__    /  |/  /__ ____  ___ ____ ____ __ _  ___ ___  / /_  / __/_ _____/ /____ __ _ 
+//  / / / __/ _ `/ / _ \  / /|_/ / _ `/ _ \/ _ `/ _ `/ -_)  ' \/ -_) _ \/ __/ _\ \/ // (_-< __/ -_)  ' \
+// /_/ /_/  \_,_/_/_//_/ /_/  /_/\_,_/_//_/\_,_/\_, /\__/_/_/_/\__/_//_/\__/ /___/\_, /___|__/\__/_/_/_/
+//                                             /___/                             /___/                  
+
 // Created by Shehal.H | Dewmi De.S | Savidya.A on 2023-07-23 T21:50:00
 // Updated on 2023-07-24 T15:22:00
+
 // Admin Login: KUDSE23.1F
 // Admin Password: 080-086-095
+
 
 #include <stdio.h>
 #include <string.h>
@@ -33,7 +41,7 @@ struct train {
     char seats[20];	
 }trr[200][200],ttt[200][200];
 
-
+//main functions
 void welcometext();
 void menu();
 int quit();
@@ -41,15 +49,18 @@ void login();
 void signup();
 void administrator();
 
+//menus
 void administrator_menu();
 void user_menu();
 
+//pages
 void des_page();
 void ad_wrong_pass();
 void wrong_pas();
 void wrong_mob();
 void verify();
 
+//administrator and user functions
 void add_train();
 void update_train();
 void view_train_for_administrator();
