@@ -1,4 +1,5 @@
-// Created by Shehal.H on 2023-07-23 T21:00:00
+// Created by Shehal.H | Dewmi De.S | Savidya.A on 2023-07-23 T21:50:00
+// Updated on 2023-07-24 T15:22:00
 // Admin Login: KUDSE23.1F
 // Admin Password: 080-086-095
 
@@ -36,7 +37,6 @@ struct train {
 void welcometext();
 void menu();
 int quit();
-void wrong();
 void login();
 void signup();
 void administrator();
@@ -62,7 +62,6 @@ void update_train();
 void t_update();
 void cancle_updates();
 void cancle_trains();
-//int train_special_no=0;
 void check();
 
 //main function
@@ -589,7 +588,7 @@ void view_train_for_user(){
 }
 
 
-
+//view train - administrator
 void view_train_for_administrator(){
 	system("cls");
 	FILE *fp,*fp1;
@@ -600,31 +599,26 @@ void view_train_for_administrator(){
 	{
 	printf("file not found");	
 	}
-	printf("                             _______________trains_________________\n\n\n\n");
-	printf("train_name   \t\t train_no \t\t from \t\t to \t\t charge\n");
+	printf("                             _______________Train Details_________________\n\n\n\n");
+	printf("Train_name\t\tTrain_no\t\tFrom\t\tTo\t\tCharge\n");
     int i,j ;
 	for ( i=0;i<10;i++){
 		for ( j=0;j<=0;j++){                                         
 				fread(&trr[i][j],sizeof(struct train),1,fp);
 				 
-				printf("%1s %20s %20s %20s %20s\n",trr[i][j].train_name,trr[i][j].train_no,trr[i][j].from,trr[i][j].to,trr[i][j].charge);
-				//printf("train_no:-%s\n",trr[i][j].train_no);
-				//printf("from:-%s\n",trr[i][j].from);                                                                                      
-				//printf("to:-%s\n",trr[i][j].to);
-				//printf("charge:-%s\n",trr[i][j].charge);
-			
+				printf("%1s\t%20s\t%20s %20s %20s\n",trr[i][j].train_name,trr[i][j].train_no,trr[i][j].from,trr[i][j].to,trr[i][j].charge);
 		}
 	}
 	fclose(fp);
 	char a;
-	printf("                             _______________updates_________________\n\n\n\n");	
+	printf("                             _______________Train Updates_________________\n\n\n\n");	
 	check();
 	system("pause");
 	system ("cls");
 	administrator_menu();
 }
 
-
+//check updates
 void check(){
  FILE *fp1;  
  fp1=fopen("update_trains.txt","rb");
@@ -641,36 +635,29 @@ void check(){
 	fclose(fp1);
 }
 
-
+//updates in train - administrator
 void updates_in_train(){
 	system("cls");
-	char u_i_t;
-		printf("\n\n1.update train \n2.cancle all updates \n3. cancle trains \n4. back \n");
-		printf("enter your choice");
-		scanf("%s",&u_i_t);
+	char choice;
+		printf("1.update train \n2.Cancel all updates \n3.Cancel trains \n4.Back \n");
+        printf("\n");
+		printf("Enter your choice - ");
+		scanf("%s",&choice);
 	
-		switch (u_i_t){
+		switch (choice){
 			case '1' :
-			
 				update_train();			    
 				break;
-			
-			
 			case '2' :
-		
-				cancle_updates();
-				   
+				cancle_updates();  
 				break;
 			case '3':
 				cancle_trains();
-			
 			case '4' :
 				administrator_menu();
 				break;
-			
 			default:
-				
-				printf("not ok");
+				printf("ERROR::: Please enter valid choice\n\n");
 				break;
 		}	
 }
@@ -688,12 +675,13 @@ void t_update(){
 			for ( j=0;j<=0;j++){
 			fread(&ttt[i][j],sizeof(struct train),1,fp1);
 			
-				printf("%1s %20s %20s %20s %20s %20s \n",ttt[i][j].train_name,ttt[i][j].train_no,ttt[i][j].from,ttt[i][j].to,ttt[i][j].charge,ttt[i][j].status,ttt[i][j].seats);
+				printf("%1s %20s %20s %20s%20s %20s \n",ttt[i][j].train_name,ttt[i][j].train_no,ttt[i][j].from,ttt[i][j].to,ttt[i][j].charge,ttt[i][j].status,ttt[i][j].seats);
 			}
 		}
  fclose(fp1);
 }
 
+//update train
 void update_train(){
 
 	FILE *fp,*fp1;
@@ -703,20 +691,19 @@ void update_train(){
         printf("Error opening file");
     }
 	char value[20];
-	printf("enter train no :-");
+	printf("Enter train no :-");
 	scanf("%s",&value);
     int i,j;
 	for ( i=0;i<=10;i++){
 		for ( j=0;j<=0;j++){
-			//printf("error");
 			fread(&trr[i][j],sizeof(struct train),1,fp);
 			if ((strcmp(value,trr[i][j].train_no)==0))
 			{
-							printf("\n\nenter train status cancle/running\n\n");
+							printf("\n\nEnter train status Cancel/Running - ");
 							scanf("%s",trr[i][j].status);
 							
 							fwrite(&trr[i][j],sizeof(struct train),1,fp1);
-							printf("update successfully....\n");          
+							printf("Update successfully....\n");          
 								fclose(fp1);
 								fclose(fp); 
 							system("pause");
@@ -726,8 +713,8 @@ void update_train(){
 	}
 
 }
-   //error
-   
+
+//cancel updates
 void cancle_updates()
 {
 	if( remove("update_trains.txt")== 0){
@@ -738,13 +725,14 @@ void cancle_updates()
 
     else{
     	
-    	printf("\n\nerror\n\n");
+    	printf("\n\nError\n\n");
     	system("pause");
     	administrator_menu();
 	}
 
 }
 
+//cancel trains
 void cancle_trains()
 {
 	FILE *fp,*fp1;
