@@ -24,11 +24,11 @@ View Passenger Details: Administrators can access passenger details for all book
 
 - Compile the C source files using an appropriate C compiler. For example, using GCC:
 
-    gcc -o train_management_system main.c user.c admin.c
+    gcc -o tms_main.c
 
 - Run the compiled executable to start the Train Management System:
 
-    ./train_management_system
+    ./tms_main
 
 - Follow the on-screen instructions to navigate through the user and admin panels.
 
