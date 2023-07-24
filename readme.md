@@ -42,7 +42,7 @@ This project is licensed under the MIT License.
 
 ## Authors
 
-Shehal.H
-Dewmi De.S
+Shehal.H |
+Dewmi De.S | 
 Savidya.A
 
