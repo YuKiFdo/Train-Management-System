@@ -76,14 +76,14 @@ void cancle_trains();
 void check();
 
 //main function
-void main() {
-	welcometext();
+int main() {
 	menu();
 }
 
 //main menu
 void menu() {	
     system("cls");
+	welcometext();
     char choice;
 
 	printf("\n1.Signup\n2.Login \n3.Administrator\n4.Exit\n");
@@ -385,7 +385,8 @@ void book_ticket(){
     for ( i=0;i<10;i++) {
 		for ( j=0;j<=0;j++) {                                         
 				fread(&trr[i][j],sizeof(struct train),1,fps);
-                 if (p <= trr[i][j].seats) {
+				 int seats=atoi(trr[i][j].seats);
+                 if (p<=seats) {
                     //check total ticket price
                     int price=atoi(trr[i][j].charge);
                     ticket_price = p*price;
@@ -417,6 +418,7 @@ void book_ticket(){
 			            fwrite(&tu[i][j],sizeof(struct train_user),1,fp);	
 		                }
 	                }
+					p=0;
                  }else{
                      printf("Sorry, %d seats are not available\n\n",p);
                  }
